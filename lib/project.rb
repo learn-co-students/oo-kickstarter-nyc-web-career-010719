@@ -14,8 +14,4 @@ class Project
     backer.backed_projects << self
   end
 
-  # def back_project(backer)
-  #   self.backed_projects << backer
-  # end
-
 end #end of class
