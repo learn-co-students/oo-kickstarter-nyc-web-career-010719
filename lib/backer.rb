@@ -1,19 +1,28 @@
-require "pry"
-
 class Backer
   attr_accessor :backed_projects
   attr_reader :name
 
+  @@all = []
+
+  def self.all
+    @@all
+  end
+
+
   def initialize(name)
     @name = name
-    @backed_projects = []
 
+    @@all << self
   end
 
   def back_project(project)
-    @backed_projects << project
-    #add the backer (you) to the project instance's backers array
-    project.add_backer(self)
+    ProjectBacker.new(project, self)
   end
 
-end
+  def backed_projects
+    ProjectBacker.all.select do |pb|
+      pb.backer == self
+    end
+  end
+
+end #end of Backer class

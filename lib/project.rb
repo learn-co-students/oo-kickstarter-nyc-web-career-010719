@@ -1,23 +1,28 @@
-require "pry"
-
-
 class Project
-attr_accessor :backers
-attr_reader :title
+  attr_accessor :backers
+  attr_reader :title
+
+  @@all = []
+
+  def self.all
+    @@all
+  end
 
   def initialize(title)
     @title = title
-    @backers = []
+
+
+    @@all << self
   end
 
   def add_backer(backer)
-    @backers << backer
-
-    #this method adds project to the total projects
-    # for the backer
-
-    backer.backed_projects << self
-
+    ProjectBacker.new(self, backer)
   end
 
-end
+  def backers
+    ProjectBacker.all.select do |pb|
+      pb.project == self
+    end
+  end
+
+end #end of Project class
